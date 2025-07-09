@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sync_xp/auth/login.dart';
-import 'package:sync_xp/auth/register.dart';
+import 'package:sync_xp/features/auth/login.dart';
+import 'package:sync_xp/features/auth/register.dart';
 
 void main() => runApp(const SyncXPApp());
 

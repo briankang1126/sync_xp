@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:sync_xp/auth/register.dart';
+import 'package:sync_xp/features/auth/login.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({super.key});
   @override
   Widget build(BuildContext context) {
+    final fullnameController = TextEditingController();
+    final usernameController = TextEditingController();
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
+    final confirmController = TextEditingController();
     return Scaffold(
       body: Stack(
         children: [
@@ -22,20 +25,20 @@ class LoginScreen extends StatelessWidget {
                   Icon(Icons.music_note, color: Colors.tealAccent, size: 52),
                   const SizedBox(height: 18),
                   Text(
-                    "Welcome Back!",
+                    "Create an Account!",
                     style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                           color: Colors.tealAccent,
                           fontWeight: FontWeight.bold,
                         ),
                   ),
-                  const SizedBox(height: 36),
-                  // Email
+                  const SizedBox(height: 32),
+                  // Full name
                   TextField(
-                    controller: emailController,
+                    controller: fullnameController,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.person_outline, color: Colors.tealAccent),
-                      hintText: "Email",
+                      hintText: "Full Name",
                       hintStyle: TextStyle(color: Colors.tealAccent.withOpacity(0.7)),
                       filled: true,
                       fillColor: Colors.white.withOpacity(0.07),
@@ -45,7 +48,41 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 18),
+                  const SizedBox(height: 16),
+                  // Username
+                  TextField(
+                    controller: usernameController,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.person_2_outlined, color: Colors.tealAccent),
+                      hintText: "Username",
+                      hintStyle: TextStyle(color: Colors.tealAccent.withOpacity(0.7)),
+                      filled: true,
+                      fillColor: Colors.white.withOpacity(0.07),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  // Email
+                  TextField(
+                    controller: emailController,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.email_outlined, color: Colors.tealAccent),
+                      hintText: "Email Address",
+                      hintStyle: TextStyle(color: Colors.tealAccent.withOpacity(0.7)),
+                      filled: true,
+                      fillColor: Colors.white.withOpacity(0.07),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
                   // Password
                   TextField(
                     controller: passwordController,
@@ -63,8 +100,25 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 18),
-                  // Login button
+                  const SizedBox(height: 16),
+                  // Confirm Password
+                  TextField(
+                    controller: confirmController,
+                    obscureText: true,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.lock_outline, color: Colors.tealAccent),
+                      hintText: "Confirm Password",
+                      hintStyle: TextStyle(color: Colors.tealAccent.withOpacity(0.7)),
+                      filled: true,
+                      fillColor: Colors.white.withOpacity(0.07),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 24),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
@@ -77,51 +131,23 @@ class LoginScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(18),
                         ),
                       ),
-                      child: const Text("Login", style: TextStyle(fontSize: 18)),
+                      child: const Text("Create Account", style: TextStyle(fontSize: 18)),
                     ),
-                  ),
-                  const SizedBox(height: 16),
-                  // Remember me + Forgot Password
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Checkbox(
-                            value: false,
-                            onChanged: (_) {},
-                            activeColor: Colors.tealAccent,
-                          ),
-                          const Text(
-                            "Remember Me",
-                            style: TextStyle(color: Colors.white70, fontSize: 13),
-                          ),
-                        ],
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text("Forgot Password?"),
-                        style: TextButton.styleFrom(
-                          foregroundColor: Colors.tealAccent,
-                          padding: EdgeInsets.zero,
-                        ),
-                      ),
-                    ],
                   ),
                   const SizedBox(height: 18),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        "Don't have an account?",
+                        "Already have an account?",
                         style: TextStyle(color: Colors.white70, fontSize: 15),
                       ),
                       TextButton(
                         onPressed: () => Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (_) => const RegisterScreen()),
+                          MaterialPageRoute(builder: (_) => const LoginScreen()),
                         ),
-                        child: const Text("Create an account"),
+                        child: const Text("Sign in"),
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.tealAccent,
                         ),
