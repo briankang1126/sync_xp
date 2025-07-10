@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sync_xp/features/auth/login.dart';
+import 'package:sync_xp/controller/register_controller.dart';
+
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -122,7 +124,19 @@ class RegisterScreen extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {},
+                    onPressed: () {
+                      final controller = RegisterController();
+                      controller.handleRegister(
+                        context: context,
+                        fullName: fullnameController.text.trim(),
+                        username: usernameController.text.trim(),
+                        email: emailController.text.trim(),
+                        password: passwordController.text.trim(),
+                        confirm: confirmController.text.trim(),
+                      );
+                    },
+
+
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.tealAccent.shade700,
                         foregroundColor: Colors.black,

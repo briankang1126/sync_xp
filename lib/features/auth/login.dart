@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sync_xp/features/auth/register.dart';
+import 'package:sync_xp/controller/login_controller.dart';
+
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -68,7 +70,15 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                          final controller = LoginController();
+                          controller.handleLogin(
+                            context: context,
+                            email: emailController.text.trim(),
+                            password: passwordController.text.trim(),
+                          );
+                        },
+
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.tealAccent.shade700,
                         foregroundColor: Colors.black,
