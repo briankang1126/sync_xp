@@ -2,16 +2,27 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import '../models/users.dart';
+import 'package:collection/collection.dart';
+import 'package:path_provider/path_provider.dart';
 
 class LoginController {
-  final String filePath = 'lib/mock_data/mock_users.json';
+  Future<File> _getUserFile() async {
+    final dir = await getApplicationDocumentsDirectory();
+    final file = File('${dir.path}/mock_users.json');
+
+    if (!await file.exists()) {
+      await file.create(recursive: true);
+      await file.writeAsString('[]');
+    }
+
+    return file;
+  }
 
   Future<List<User>> _loadUsers() async {
-    final file = File(filePath);
-    if (!await file.exists()) return [];
+    final file = await _getUserFile();
     final content = await file.readAsString();
     final List decoded = jsonDecode(content);
-    return decoded.map((json) => User.fromJson(json)).toList();
+    return decoded.map((e) => User.fromJson(e)).toList();
   }
 
   Future<void> handleLogin({
@@ -23,15 +34,15 @@ class LoginController {
       _showMessage(context, 'Please enter email and password');
       return;
     }
+
     final users = await _loadUsers();
-    final user = users.firstWhere(
+    final user = users.firstWhereOrNull(
       (u) => u.email == email && u.password == password,
-      orElse: () => User.empty(),
     );
 
-    if (user.email.isNotEmpty) {
+    if (user != null) {
       _showMessage(context, 'Welcome back, ${user.username}!');
-      // TODO: Navigate to next screen
+      // TODO: Navigate to home screen
     } else {
       _showMessage(context, 'Invalid credentials');
     }

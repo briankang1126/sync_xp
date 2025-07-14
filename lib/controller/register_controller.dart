@@ -3,22 +3,34 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import '../models/users.dart';
 import 'package:sync_xp/features/auth/login.dart';
+import 'package:path_provider/path_provider.dart';
 
 class RegisterController {
-  final String filePath = 'lib/mock_data/mock_users.json';
+  Future<File> _getUserFile() async {
+    final dir = await getApplicationDocumentsDirectory();
+    final file = File('${dir.path}/mock_users.json');
+
+    if (!await file.exists()) {
+      await file.create(recursive: true);
+      await file.writeAsString('[]');
+      print('✅ Saving user data to: $file');
+    }
+
+    return file;
+  }
 
   Future<void> register(User user) async {
-    final file = File(filePath);
+    final file = await _getUserFile();
 
     List<User> users = [];
-    if (await file.exists()) {
+    try {
       final content = await file.readAsString();
       if (content.trim().isNotEmpty) {
         final List decoded = jsonDecode(content);
         users = decoded.map((json) => User.fromJson(json)).toList();
       }
-    } else {
-      await file.create(recursive: true);
+    } catch (e) {
+      print("Error reading users: $e");
     }
 
     if (users.any((u) => u.email == user.email || u.username == user.username)) {
@@ -75,4 +87,3 @@ class RegisterController {
     }
   }
 }
-
