@@ -76,7 +76,6 @@ lib/
 ├── providers/                    # State management using Riverpod
 │
 └── widgets/                      # Reusable UI components (cards, buttons, tags, etc.)
-
 ```
 
 
@@ -95,5 +94,7 @@ This keeps the `features/` directory clean and focused purely on UI components l
 ## Push Change
 Once you finished your changing run this lines:
 1) git add .
-2) git -m "(Your Message)"
+2) git commit -m "(Your Message)"
+   exp: git commit -m "First Commit"
 3) git push origin {branch name}
+   exp: git push origin main
