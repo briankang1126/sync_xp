@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../models/users.dart';
 import 'package:collection/collection.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:sync_xp/features/index.dart';
 
 class LoginController {
   Future<File> _getUserFile() async {
@@ -42,7 +43,11 @@ class LoginController {
 
     if (user != null) {
       _showMessage(context, 'Welcome back, ${user.username}!');
-      // TODO: Navigate to home screen
+    await Future.delayed(const Duration(milliseconds: 800));
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
+      );
     } else {
       _showMessage(context, 'Invalid credentials');
     }
