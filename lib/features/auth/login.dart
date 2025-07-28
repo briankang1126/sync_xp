@@ -14,7 +14,7 @@ class LoginScreen extends StatelessWidget {
       body: Stack(
         children: [
           Positioned.fill(
-            child: Container(color: Colors.black.withOpacity(0.6)),
+            child: Container(color: Colors.blue.withOpacity(0.6)),
           ),
           Center(
             child: SingleChildScrollView(
@@ -22,7 +22,7 @@ class LoginScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.music_note, color: Colors.tealAccent, size: 52),
+                  Image.asset('images/app_logo.png', width: 100, height: 100),
                   const SizedBox(height: 18),
                   Text(
                     "Welcome Back!",

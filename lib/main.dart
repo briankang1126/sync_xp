@@ -44,7 +44,7 @@ class WelcomeScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.music_note, color: Colors.tealAccent, size: 56),
+                  Image.asset('images/app_logo.png', width: 100, height: 100),
                   const SizedBox(height: 36),
                   Text(
                     "Let's Get Started!",
