@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../models/users.dart';
 import 'package:sync_xp/features/auth/login.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class RegisterController {
   Future<File> _getUserFile() async {
@@ -76,6 +77,17 @@ class RegisterController {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Registration successful!')),
       );
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => Center(
+          child: LoadingAnimationWidget.twoRotatingArc(
+            color: Colors.tealAccent,
+            size: 50,
+          ),
+        ),
+      );
+      await Future.delayed(const Duration(seconds: 4));
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (_) => const LoginScreen()),

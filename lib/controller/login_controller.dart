@@ -5,6 +5,7 @@ import '../models/users.dart';
 import 'package:collection/collection.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sync_xp/features/index.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class LoginController {
   Future<File> _getUserFile() async {
@@ -42,12 +43,29 @@ class LoginController {
     );
 
     if (user != null) {
-      _showMessage(context, 'Welcome back, ${user.username}!');
-    await Future.delayed(const Duration(milliseconds: 800));
-    Navigator.pushReplacement(
+    _showMessage(context, 'Welcome back, ${user.username}!');
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => Center(
+        child: LoadingAnimationWidget.twoRotatingArc(
+          color: Colors.tealAccent,
+          size: 50,
+        ),
+      ),
+    );
+
+    await Future.delayed(const Duration(seconds: 4));
+
+    if (context.mounted) {
+      Navigator.pop(context); // Dismiss loading
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
+    }
+
     } else {
       _showMessage(context, 'Invalid credentials');
     }

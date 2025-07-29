@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sync_xp/features/auth/login.dart';
 import 'package:sync_xp/features/auth/register.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 void main() => runApp(const SyncXPApp());
 
