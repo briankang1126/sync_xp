@@ -6,6 +6,7 @@ import 'package:collection/collection.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sync_xp/features/index.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class LoginController {
   Future<File> _getUserFile() async {
@@ -49,12 +50,47 @@ class LoginController {
       context: context,
       barrierDismissible: false,
       builder: (_) => Center(
-        child: LoadingAnimationWidget.twoRotatingArc(
-          color: Colors.tealAccent,
-          size: 50,
+        child: Container(
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            color: Colors.black87,
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset(
+                'images/character.png',
+                width: 80,
+                height: 80,
+              ),
+              const SizedBox(height: 20),
+              LoadingAnimationWidget.twoRotatingArc(
+                color: Colors.tealAccent,
+                size: 50,
+              ),
+              const SizedBox(height: 16),
+              AnimatedTextKit(
+                totalRepeatCount: 1,
+                animatedTexts: [
+                  TypewriterAnimatedText(
+                    'Welcome to Buddiefy',
+                    textStyle: const TextStyle(
+                      fontSize: 18,
+                      color: Colors.white70,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    speed: const Duration(milliseconds: 80),
+                    cursor:'|',
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
+
 
     await Future.delayed(const Duration(seconds: 4));
 
