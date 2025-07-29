@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sync_xp/features/auth/login.dart';
 import 'package:sync_xp/features/auth/register.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:video_player/video_player.dart';
+
 
 void main() => runApp(const SyncXPApp());
 
@@ -24,21 +26,53 @@ class SyncXPApp extends StatelessWidget {
 const String kBgImg = 'https://i.imgur.com/qMvzsmi.jpeg';
 
 /// 1. Welcome Screen
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
+
+  @override
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
+  late VideoPlayerController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.asset("videos/video_bg.mp4")
+      ..initialize().then((_) {
+        _controller.setLooping(true);
+        _controller.setVolume(0);
+        _controller.play();
+        setState(() {});
+      });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          // Background image and overlay
-          Positioned.fill(
-            child: Image.network(kBgImg, fit: BoxFit.cover),
-          ),
+          if (_controller.value.isInitialized)
+            SizedBox.expand(
+              child: FittedBox(
+                fit: BoxFit.cover,
+                child: SizedBox(
+                  width: _controller.value.size.width,
+                  height: _controller.value.size.height,
+                  child: VideoPlayer(_controller),
+                ),
+              ),
+            ),
           Positioned.fill(
             child: Container(color: Colors.black.withOpacity(0.6)),
           ),
-          // Main content
           Center(
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 56),
@@ -75,22 +109,20 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 26),
-                  Text(
-                    "or sign in with",
-                    style: TextStyle(color: Colors.white70, fontSize: 15),
-                  ),
+                  Text("or sign in with",
+                      style: TextStyle(color: Colors.white70, fontSize: 15)),
                   const SizedBox(height: 12),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CircleAvatar(
                         backgroundColor: Colors.tealAccent.shade700,
-                        child: Icon(Icons.email, color: Colors.black),
+                        child: const Icon(Icons.email, color: Colors.black),
                       ),
                       const SizedBox(width: 20),
                       CircleAvatar(
                         backgroundColor: Colors.tealAccent.shade700,
-                        child: Icon(Icons.phone_android, color: Colors.black),
+                        child: const Icon(Icons.phone_android, color: Colors.black),
                       ),
                     ],
                   ),
@@ -123,4 +155,3 @@ class WelcomeScreen extends StatelessWidget {
     );
   }
 }
-
