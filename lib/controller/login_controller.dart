@@ -7,6 +7,15 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sync_xp/features/index.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+Future<void> _launchGame() async {
+  final url = Uri.parse('https://dawnzours.itch.io/buddiefy');
+  if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+    throw Exception('Could not launch game URL');
+  }
+}
+
 
 class LoginController {
   Future<File> _getUserFile() async {
@@ -94,14 +103,8 @@ class LoginController {
 
     await Future.delayed(const Duration(seconds: 4));
 
-    if (context.mounted) {
-      Navigator.pop(context); // Dismiss loading
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
-      );
-    }
-
+    await _launchGame();
+    
     } else {
       _showMessage(context, 'Invalid credentials');
     }
